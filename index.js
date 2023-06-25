@@ -108,6 +108,7 @@
 // scrapeJumia();
 
 const puppeteer = require("puppeteer");
+const fs = require("fs");
 
 async function scrapeJumia(searchTerm) {
   const browser = await puppeteer.launch({ headless: false });
@@ -123,6 +124,9 @@ async function scrapeJumia(searchTerm) {
 
   // Extract the product data from all pages
   const productData = await scrapeProductData(page);
+
+  // Save the data as JSON in a file
+  saveDataAsJson(productData);
 
   // Print the extracted information
   //   productData.forEach((product) => {
@@ -204,6 +208,18 @@ async function scrapeProductData(page) {
   }
 
   return productData;
+}
+
+function saveDataAsJson(data) {
+  const jsonData = JSON.stringify(data, null, 2);
+
+  fs.writeFile("jumia_products.json", jsonData, "utf8", (err) => {
+    if (err) {
+      console.error("Error writing JSON file:", err);
+    } else {
+      console.log("Data saved successfully as JSON.");
+    }
+  });
 }
 
 scrapeJumia("a");
