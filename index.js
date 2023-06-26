@@ -111,7 +111,8 @@ async function scrapeJumia() {
     await page.keyboard.press("Enter");
 
     // Wait for the search results to load
-    await page.waitForNavigation({ timeout: 0 });
+    await page.setDefaultNavigationTimeout(0);
+    await page.waitForNavigation();
 
     // Extract the product data from all pages
     const productData = await scrapeProductData(page);
@@ -124,6 +125,11 @@ async function scrapeJumia() {
         // uniqueProducts.add(productKey);
       }
     });
+
+    // Clear the search input field
+    await page.focus('input[name="q"]');
+    await page.keyboard.press("End");
+    await page.keyboard.press("Backspace");
   }
 
   // Convert the set back to an array
