@@ -218,6 +218,7 @@
 
 const puppeteer = require("puppeteer");
 const fs = require("fs");
+const { log } = require("console");
 
 async function scrapeJumia() {
   const browser = await puppeteer.launch({ headless: false });
@@ -253,17 +254,18 @@ async function scrapeJumia() {
 
   const uniqueProducts = new Set();
 
-  for (let i = 0; i < alphabet.length; i++) {
-    const searchTerm = alphabet[i];
+  for (let i = 0; i < links.length; i++) {
+    const searchTerm = links[i];
     console.log("Scraping products starting with letter:", searchTerm);
 
     // Type the search term and press Enter
-    await page.type('input[name="q"]', searchTerm);
-    await page.keyboard.press("Enter");
+    // await page.type('input[name="q"]', searchTerm);
+    await page.goto(searchTerm);
+    // await page.keyboard.press("Enter");
 
     // Wait for the search results to load
-    await page.setDefaultNavigationTimeout(0);
-    await page.waitForNavigation();
+    // await page.setDefaultNavigationTimeout(0);
+    // await page.waitForNavigation();
 
     // Extract the product data from all pages
     const productData = await scrapeProductData(page);
@@ -293,10 +295,12 @@ async function scrapeJumia() {
 }
 
 async function scrapeProductData(page) {
+  console.log("called scrapeProductData");
   const productData = [];
 
   // Function to extract product data from a single page
   const extractProductData = async () => {
+    console.log("trying to scrape");
     const products = await page.evaluate(() => {
       const products = Array.from(document.querySelectorAll("a.core"));
 
@@ -350,7 +354,7 @@ async function scrapeProductData(page) {
 function saveDataAsJson(data) {
   const jsonData = JSON.stringify(data, null, 2);
 
-  fs.writeFile("jumia_products.json", jsonData, "utf8", (err) => {
+  fs.writeFile("jumia_category_products.json", jsonData, "utf8", (err) => {
     if (err) {
       console.error("Error writing JSON file:", err);
     } else {
