@@ -225,6 +225,32 @@ async function scrapeJumia() {
   await page.goto("https://www.jumia.com.ng/");
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+  // LINKS TO NAVIGATE TO
+  const links = [
+    "https://www.jumia.com.ng/phones-tablets/",
+    "https://www.jumia.com.ng/groceries/",
+    "https://www.jumia.com.ng/computing/",
+    "https://www.jumia.com.ng/health-beauty/",
+    "https://www.jumia.com.ng/televisions/",
+    "https://www.jumia.com.ng/category-fashion-by-jumia/",
+    "https://www.jumia.com.ng/appliances-fridges-freezers/",
+    "https://www.jumia.com.ng/mobile-accessories/",
+    "https://www.jumia.com.ng/generators/",
+    "https://www.jumia.com.ng/men-sneakers/",
+    "https://www.jumia.com.ng/mlp-clearance-sale/",
+    "https://www.jumia.com.ng/grocery-rice/",
+    "https://www.jumia.com.ng/food-cupboard-supplies/",
+    "https://www.jumia.com.ng/cooking-oil/",
+    "https://www.jumia.com.ng/drinks/",
+    "https://www.jumia.com.ng/laundry-supplies/",
+    "https://www.jumia.com.ng/air-fresheners-d/",
+    "https://www.jumia.com.ng/mlp-power-up-deals/?tag=Camp_94",
+    "https://www.jumia.com.ng/generators/",
+    "https://www.jumia.com.ng/mlp-power-up-deals/?tag=Camp_92",
+    "https://www.jumia.com.ng/mobile-phone-batteries-battery-packs/",
+  ];
+
   const uniqueProducts = new Set();
 
   for (let i = 0; i < alphabet.length; i++) {
